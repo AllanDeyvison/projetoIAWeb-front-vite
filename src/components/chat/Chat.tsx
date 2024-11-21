@@ -3,10 +3,11 @@ import { useContext, useEffect, useState } from "react";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 import ChatAnswer from "./ChatAnswer";
-import { sendMessage } from "@/services/ChatService";
 import { RotatingLines } from "react-loader-spinner";
 import AuthContext from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { saveMessage } from "@/services/AuthService";
+import { sendMessage } from "@/services/ChatService";
 
 function Chat() {
 
@@ -15,12 +16,13 @@ function Chat() {
     const { user } = useContext(AuthContext);
     const token = user.token;
 
+
     const navigate = useNavigate();
 
     useEffect(() => {
         if(token === '') {
           //voltar pro login
-          alert('Ta tirando...')
+          alert('Faça login novamente...')
           navigate('/login')
         }
       }, [token])
@@ -28,20 +30,22 @@ function Chat() {
 
 
 
+
     async function addMessage(text: string) {
-        const newMessage: Message = { message: text, answer: '' };
+        const newMessage: Message = { message: text, answer: '', user: user};
         setMessages([...messages, newMessage]);
         setLoading(true);
         try {
             const resp = await sendMessage('http://127.0.0.1:5000/query', text);
-            // setMessages([...messages, { message: text, answer: resp}]);
+
             setMessages(prevMessages => {
                 const updateMessages = prevMessages.map(msg =>
                     msg.message === text ? { ...msg, answer: resp } : msg
                 )
                 return updateMessages;
             });
-
+            const messageSend: Message = { message: text, answer: resp, user: user };
+            sendMessagesBack(messageSend);
             setLoading(false);
 
         } catch (error) {
@@ -50,7 +54,19 @@ function Chat() {
             setLoading(false);
         }
     }
-
+    async function sendMessagesBack(messageBody: Message) {
+        try {
+            await saveMessage('/message', messageBody,
+                {headers: {Authorization: token},}
+            );
+            console.log("--------ahahah", messageBody);
+        }
+        catch (error) {
+            console.log(error);
+            console.log("--------ahahah", messageBody);
+            alert("Erro ao enviar mensagem");
+        }
+    }
 
 
 
@@ -64,7 +80,7 @@ function Chat() {
                                 <div className="grid grid-cols-12 gap-y-2">
                                     {messages.map((message, index) => (
                                         <div key={index} className="col-start-1 col-end-13 p-3 rounded-lg">
-                                            <ChatMessage message={message} />
+                                            <ChatMessage message={message} user={user} />
                                             {message.answer && <ChatAnswer answer={message.answer} />}
 
                                                 {loading && index === messages.length - 1 && (

@@ -6,4 +6,6 @@ export default interface UserLogin {
     name: string,
     picture: string,
     email: string 
+    lastname: string,
+    birthday: string
 }

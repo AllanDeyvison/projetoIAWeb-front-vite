@@ -70,11 +70,11 @@ function Register() {
 
   return (
     <>
-      <div className="grid grid-cols-1 place-items-center p-10">
-        <div className="max-w-2xl mx-auto h-dvh">
-          <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700">
+      <div className="grid grid-cols-1 place-items-center ">
+        <div className="max-w-2xl p-5 mx-auto ">
+          <div className="bg-white shadow-md border border-gray-200 rounded-lg p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700 ">
             <form className="space-y-6 p-10" onSubmit={submitNewUser}>
-              <h2 className="text-xl font-medium text-gray-900 dark:text-white" >Cadastrar</h2>
+              <h3 className="text-xl font-medium text-gray-900 dark:text-white" >Cadastrar</h3>
               <div className="grid gap-6 mb-6 lg:grid-cols-2">
                 <div>
                   <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-600">Nome</label>
@@ -125,7 +125,8 @@ function Register() {
                     />
                   </div>
                 </div>
-                <div>
+              </div>
+              <div className="mb-6">
                   <label htmlFor="picture" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-600">Foto URL</label>
                   <input type="url" id="picture" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 
   focus:border-blue-500 block w-full p-2.5  dark:border-gray-500 dark:bg-gray-600 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500
@@ -135,7 +136,6 @@ function Register() {
                     onChange={(e: ChangeEvent<HTMLInputElement>) => updateState(e)
                     } />
                 </div>
-              </div>
               <div className="mb-6">
                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-600">Email</label>
                 <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 

@@ -4,6 +4,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Register from './pages/register/Register'
 import Login from './pages/login/Login'
 import Home from './pages/home/Home'
+import Navbar from './components/navbar/Navbar'
+import { ToastContainer } from 'react-toastify'
+import MyModal from './components/editUser/EditUserModal'
+// import 'react-toastify/dist/ReactToastify.css';
+
 
 function App() {
 
@@ -11,14 +16,17 @@ function App() {
     <>
       <AuthProvider>
         <BrowserRouter>
-          {/* <ToastContainer> */}
+          <ToastContainer/>
+            <Navbar />
+            <div className="min-h-[80vh]">
             <Routes>
             <Route path="/" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path='/home' element={<Home />} />
+              <Route path='/edit:id' element={<MyModal/>} />
             </Routes>
-          {/* </ToastContainer> */}
+            </div> 
         </BrowserRouter>
     
       </AuthProvider>

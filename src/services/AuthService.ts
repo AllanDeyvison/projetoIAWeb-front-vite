@@ -1,3 +1,4 @@
+import Message from "@/models/Message";
 import axios from "axios";
 
 const api = axios.create({
@@ -14,16 +15,26 @@ export const login = async(url: string, dados: Object, setDados: Function) => {
     setDados(resp.data)
 }
 
-export const cadastrar = async(url: string, dados: Object, setDados: Function, header: Object) => {
-  const resposta = await api.post(url, dados, header)
-  setDados(resposta.data)
+export const update = async(url: string, dados: Object, setDados: Function, header: Object) => {
+  const resp = await api.put(url, dados, header)
+  setDados(resp.data)
 }
 
-export const atualizar = async(url: string, dados: Object, setDados: Function, header: Object) => {
-  const resposta = await api.put(url, dados, header)
-  setDados(resposta.data)
+export const search = async(url: string, setDados: Function, header: Object) => {
+  const resp = await api.get(url, header)
+  setDados(resp.data)
 }
 
-export const deletar = async(url: string, header: Object) => {
+export const saveMessage = async(endpoint: string, message: Message, header: Object) => {
+  await api.post(endpoint, message, header) 
+}
+
+
+// export const cadastrar = async(url: string, dados: Object, setDados: Function, header: Object) => {
+//   const resposta = await api.post(url, dados, header)
+//   setDados(resposta.data)
+// }
+
+export const deleteUser = async(url: string, header: Object) => {
   await api.delete(url, header)
 }

@@ -24,7 +24,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         token: "",
         name: "",
         picture: "",
-        email: ""
+        email: "",
+        lastname: "",
+        birthday: ""
     })
 
     const [isLoading, setIsLoading] = useState(false)
@@ -51,7 +53,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
             token: "",
             name: "",
             picture: "",
-            email: ""
+            email: "",
+            lastname: '',
+            birthday: ""
 
         })
     }

@@ -1,3 +1,4 @@
+import Message from "@/models/Message";
 import axios from "axios";
 
 const api = axios.create({
@@ -20,3 +21,4 @@ const api = axios.create({
     const data = await response.json();
     return data.answer;
   }
+

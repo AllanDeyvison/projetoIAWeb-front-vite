@@ -15,7 +15,7 @@ function ChatInput({ addMessage }: { addMessage: (text: string) => void }) {
     return (
         <div>
             <form onSubmit={handleSend}>
-                <div className="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4">
+                <div className="flex flex-row items-center h-16 rounded-xl  w-full px-4">
                     <div className="flex-grow ml-4" >
                         <div className="relative w-full">
                             <input
@@ -23,7 +23,7 @@ function ChatInput({ addMessage }: { addMessage: (text: string) => void }) {
                                 placeholder="Digite sua mensagem..."
                                 name="message"
                                 type="text"
-                                className="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
+                                className="flex w-full  bg-slate-200 border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
                                 value={inputValue}
                                 onChange={(e) => setInputValue(e.target.value)}
                             />
@@ -31,7 +31,7 @@ function ChatInput({ addMessage }: { addMessage: (text: string) => void }) {
                     </div>
                     <div className="ml-4">
                         <button
-                            className="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl
+                            className="flex items-center justify-center bg-blue-700 hover:bg-blue-700 rounded-xl
                        text-white px-4 py-1 flex-shrink-0"
                             type="submit"
                         >
