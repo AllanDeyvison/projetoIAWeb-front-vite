@@ -1,4 +1,5 @@
 import Message from "./Message";
+import { UserType } from "./UserType";
 
 export default interface User {
     id: number,
@@ -9,5 +10,6 @@ export default interface User {
     password: string,
     birthday: string,
     picture: string,
-    message?: Message | null
+    message?: Message | null,
+    userType: UserType
 }

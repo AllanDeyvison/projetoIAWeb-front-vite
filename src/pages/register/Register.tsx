@@ -2,6 +2,8 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import User from "../../models/User";
 import { createUser } from "../../services/AuthService";
+import { UserType } from "@/models/UserType";
+import { ToastAlerts } from "@/utils/ToastAlerts";
 
 function Register() {
 
@@ -18,6 +20,7 @@ function Register() {
     password: '',
     birthday: '',
     picture: '',
+    userType: UserType.USER
   });
 
   const [userBackResp, setUserBackResp] = useState<User>({
@@ -29,11 +32,12 @@ function Register() {
     password: '',
     birthday: '',
     picture: '',
+    userType: UserType.USER
   });
 
   function updateState(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
-    setUser( preState => ({ ...preState, [name]: value }));
+    setUser(preState => ({ ...preState, [name]: value }));
   }
 
   function handleConfirmPassword(e: ChangeEvent<HTMLInputElement>) {
@@ -41,17 +45,16 @@ function Register() {
   }
 
   async function submitNewUser(event: ChangeEvent<HTMLFormElement>) {
-    console.log('birthday',user.birthday)
     event.preventDefault();
     if (confirmPassword === user.password) {
       try {
         await createUser('/user/signup', user, setUserBackResp)
-        alert("Usuário cadastrado com sucesso!")
+        ToastAlerts("Usuário cadastrado com sucesso!", "sucesso")
       } catch (error) {
-        alert("Erro ao cadastrar usuário!")
+        ToastAlerts("Erro ao cadastrar usuário!", "erro")
       }
     } else {
-      alert("Senhas não conferem!")
+      ToastAlerts("Senhas não conferem!", "erro")
       setUser({ ...user, password: '' })
       setConfirmPassword('')
     }
@@ -127,15 +130,15 @@ function Register() {
                 </div>
               </div>
               <div className="mb-6">
-                  <label htmlFor="picture" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-600">Foto URL</label>
-                  <input type="url" id="picture" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 
+                <label htmlFor="picture" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-600">Foto URL</label>
+                <input type="url" id="picture" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 
   focus:border-blue-500 block w-full p-2.5  dark:border-gray-500 dark:bg-gray-600 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500
    dark:focus:border-blue-500" placeholder="suafoto.com"
-                    value={user.picture}
-                    name="picture"
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => updateState(e)
-                    } />
-                </div>
+                  value={user.picture}
+                  name="picture"
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => updateState(e)
+                  } />
+              </div>
               <div className="mb-6">
                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-600">Email</label>
                 <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 
@@ -166,6 +169,11 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="••••�
                   }
                 />
               </div>
+
+
+
+
+
               <div className="flex items-start mb-6">
                 <label htmlFor="remember" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Já tem conta? <a href="#" onClick={back} className="text-blue-600 hover:underline dark:text-blue-500">Entre</a>.</label>
               </div>

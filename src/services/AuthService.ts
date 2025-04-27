@@ -2,7 +2,7 @@ import Message from "@/models/Message";
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: `http://ec2-3-239-24-90.compute-1.amazonaws.com:8080`
+  baseURL: `http://localhost:8090`
 });
 
 export const createUser = async(url: string, dados: Object, setDados: Function) => {
@@ -27,6 +27,10 @@ export const search = async(url: string, setDados: Function, header: Object) => 
 
 export const saveMessage = async(endpoint: string, message: Message, header: Object) => {
   await api.post(endpoint, message, header) 
+}
+
+export const updateUserType = async(url: string, email: String, header: Object) => {
+  await api.put(url, email, header)
 }
 
 

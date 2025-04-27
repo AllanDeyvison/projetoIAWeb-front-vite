@@ -10,7 +10,7 @@ function ChatMessage({ message, user }: { message: Message, user: UserLogin }) {
                             <div className="flex items-center justify-start flex-row-reverse">
                                     <img src={user.picture} className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"/>
                             <div
-                                    className="relative mr-3 text-sm bg-indigo-100
+                                    className="relative mr-3 text-sm bg-gray-300 
                              py-2 px-4 shadow rounded-xl"
                                     id="chat-box">
                                     <div>

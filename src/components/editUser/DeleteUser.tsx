@@ -1,12 +1,13 @@
 import AuthContext from "@/contexts/AuthContext"
 import { deleteUser } from "@/services/AuthService"
+import { ToastAlerts } from "@/utils/ToastAlerts"
 import { Button, Dialog, DialogPanel } from "@headlessui/react"
 import { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 function DeleteUser() {
     let [isOpen, setIsOpen] = useState(false)
-    
+
     const navigate = useNavigate();
     const { user, handleLogout } = useContext(AuthContext);
     const token = user.token
@@ -21,9 +22,9 @@ function DeleteUser() {
 
     function logout() {
         handleLogout();
-        alert('Usuário deslogado com sucesso');
+        ToastAlerts('Usuário deslogado com sucesso', "info");
         navigate('/login');
-      }
+    }
 
     async function deleteU() {
         try {
@@ -32,10 +33,10 @@ function DeleteUser() {
                     Authorization: token
                 }
             })
-            alert('Usuario deletado')
+            ToastAlerts('Usuario deletado', "sucesso")
             logout()
         } catch (error) {
-            alert('Deu pra deletar não')
+            ToastAlerts('Deu pra deletar não', "erro")
         }
     }
 
@@ -57,16 +58,16 @@ function DeleteUser() {
                                 <div className="max-w-2xl p-5 mx-auto ">
                                     <div className="bg-white shadow-md border border-gray-200 rounded-lg  p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700">
                                         <p className='text-center font-semibold mb-4'>Você tem certeza de que deseja apagar seu usuário?</p>
-                                        <div className='flex justify-around'> 
-                                        <button onClick={close}
+                                        <div className='flex justify-around'>
+                                            <button onClick={close}
                                                 className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >Não</button>
                                             <button onClick={deleteU}
                                                 className="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
                                                 Sim
                                             </button>
                                         </div>
-                                           
-                                      
+
+
                                     </div>
                                 </div>
                             </div>

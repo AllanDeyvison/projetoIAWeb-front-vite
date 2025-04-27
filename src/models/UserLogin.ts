@@ -1,3 +1,5 @@
+import { UserType } from "./UserType"
+
 export default interface UserLogin {
     id: number,
     username: string,
@@ -7,5 +9,6 @@ export default interface UserLogin {
     picture: string,
     email: string 
     lastname: string,
-    birthday: string
+    birthday: string,
+    userType: UserType
 }

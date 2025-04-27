@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
-import EditUserModal from '../editUser/EditUserModal';
+
 
 function Navbar() {
   const navigate = useNavigate();
@@ -18,28 +18,27 @@ function Navbar() {
 
   if (user.token !== '') {
     navbarComponent = (
-      <div className="w-full text-white flex justify-center py-4 p-5">
-        <div className="container flex justify-between text-lg ">
-          <div className="text-2xl font-bold uppercase">ChatBoot</div>
+      <div className="w-full text-white flex justify-center p-3 bg-neutral-900 "> 
+      {/* sticky top-0 z-50 */}
+        <div className="container flex justify-center ">
+        <Link to="/home" className=" text-2xl  font-serif">Aprov IA</Link>
+          
+        {/* <Sidebar pageWrapId={"page-wrap"} outerContainerId={"App"} /> */}
+        
+          {/* <div className="flex gap-2">
+            {user?.userType === UserType.ADMIN && (
+              <Link to="/admin" className="hover:bg-gray-700 rounded-xl"> Admin </Link>
+            )}
+            <button className="group flex w-full items-center gap-2 rounded-lg  data-focus:bg-white/10 hover:bg-gray-500">
+              <PencilIcon className="size-5 fill-white" />
+              <EditUserModal />
+            </button>
 
-          <div className="flex gap-4">
-              <EditUserModal />          
-
-              {/* <Link
-              to={`/edit/${user.id}`}
-            
-              className="hover:underline cursor-pointer"
-            >
-              Editar perfil
-            </Link> */}
-            <Link
-              to="/"
-              onClick={logout}
-              className="hover:underline cursor-pointer"
-            >
-              Sair
-            </Link>
-          </div>
+            <button className="group flex w-full items-center gap-1 rounded-lg px-3 py-1.5 data-focus:bg-white/10 hover:bg-red-500 ">
+              <Link to="/" onClick={logout} >Sair</Link>
+              <ArrowRightStartOnRectangleIcon className="size-5 fill-white" />
+            </button>
+          </div> */}
         </div>
       </div>
     );

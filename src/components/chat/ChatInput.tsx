@@ -15,15 +15,19 @@ function ChatInput({ addMessage }: { addMessage: (text: string) => void }) {
     return (
         <div>
             <form onSubmit={handleSend}>
-                <div className="flex flex-row items-center h-16 rounded-xl  w-full px-4">
-                    <div className="flex-grow ml-4" >
+                <div className="flex flex-row
+                items-center h-16 
+                rounded-xl border px-4">
+                    <div className="flex-grow ml-4 text-white" >
                         <div className="relative w-full">
                             <input
                                 id="message"
                                 placeholder="Digite sua mensagem..."
                                 name="message"
                                 type="text"
-                                className="flex w-full  bg-slate-200 border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
+                                className="flex w-full bg-transparent
+                                rounded-xl  focus:outline-none 
+                                focus:border-gray-300 pl-4 h-10"
                                 value={inputValue}
                                 onChange={(e) => setInputValue(e.target.value)}
                             />
@@ -31,14 +35,14 @@ function ChatInput({ addMessage }: { addMessage: (text: string) => void }) {
                     </div>
                     <div className="ml-4">
                         <button
-                            className="flex items-center justify-center bg-blue-700 hover:bg-blue-700 rounded-xl
-                       text-white px-4 py-1 flex-shrink-0"
+                            className="flex items-center justify-center  hover:bg-gray-700 rounded-xl
+                       text-white p-3 "
                             type="submit"
                         >
-                            <span>Send</span>
+                            {/* <span>Enviar</span> */}
                             <span className="ml-2">
                                 <svg
-                                    className="w-4 h-4 transform rotate-45 -mt-px"
+                                    className="w-5 h-5 transform rotate-45 -mt-px"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"

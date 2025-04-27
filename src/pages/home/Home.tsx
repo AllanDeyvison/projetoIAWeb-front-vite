@@ -7,8 +7,8 @@ function Home() {
 
   return (
     <>
-      <div className="container">
-        <Chat/>
+      <div className="container"> 
+          <Chat/>
       </div>
     </>
 

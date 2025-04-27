@@ -70,3 +70,30 @@ body {
     @apply bg-background text-foreground; 
     } 
 }
+
+#page-wrap {
+  transition: margin-left 0.3s ease;
+}
+
+/* A navbar fixa no topo */
+#App {
+  font-family: sans-serif;
+}
+
+/* Estilo do botão de menu */
+.bm-burger-button {
+  position: fixed;
+  width: 36px;
+  height: 30px;
+  left: 36px;
+  top: 36px;
+}
+
+/* Posicionamento do menu lateral */
+.bm-menu {
+  background: #373a47;
+  padding: 2.5em 1.5em 0;
+  font-size: 1.15em;
+}
+
+
