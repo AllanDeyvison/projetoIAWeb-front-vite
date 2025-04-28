@@ -89,24 +89,25 @@ function Sidebar() {
 
 
                     <div className='mb-10 transition-opacity duration-300 delay-300'>
-                        <button className='flex items-center py-2.5 px-4 w-full text-left rounder transition duration-300 hover:bg-gray-900 hover:text-white'>
+                        {/* <button className='flex items-center py-2.5 px-4 w-full text-left rounder transition duration-300 hover:bg-gray-900 hover:text-white'>
                             <EditUserModal />
                             <span className={`transition-opacity duration-300 delay-200 ${isCollapsed ? 'opacity-0' : 'opacity-100'}`}>
                                 {
                                     !isCollapsed && "Editar Perfil"
                                 }
                             </span>
-                        </button>
+                        </button> */}
+                        <EditUserModal isCollapsed={isCollapsed} />
+                        <Link to="/" className='' onClick={logout} >
                         <button className='flex items-center py-2.5 px-4 w-full text-left rounder transition duration-300 hover:bg-red-700 hover:text-white'>
-                            <Link to="/" className='' onClick={logout} >
-                                <FiLogOut className='w-6 h-6 mr-2' /></Link>
+                            
+                                <FiLogOut className='w-6 h-6 mr-2' />
                             <span className={`transition-opacity duration-300 delay-200 ${isCollapsed ? 'opacity-0' : 'opacity-100'}`}>
                                 {
                                     !isCollapsed && "Sair"
                                 }
                             </span>
-
-                        </button>
+                        </button></Link>
                     </div>
                 </div>
             </div>

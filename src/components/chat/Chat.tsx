@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { sendNewMessage, sendOldMessage } from "@/services/ChatService";
 import Sidebar from "../sidebar/Sidebar";
 import { ToastAlerts } from "@/utils/ToastAlerts";
+import Navbar from "../navbar/Navbar";
 
 function Chat() {
 
@@ -80,7 +81,9 @@ function Chat() {
              <Sidebar/>
             <div className="flex flex-row  w-screen overflow-x-hidden">
                 <div className="flex flex-col flex-auto h-full p-6">
-                    <div className="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-neutral-700 p-6">
+                <Navbar/>
+                    <div className="flex flex-col flex-auto flex-shrink-0 rounded-b-2xl bg-neutral-700 p-6">
+                        
                         <div className="flex flex-col h-full overflow-x-auto mb-4">
                             <div className="flex flex-col h-full">
                                 <div className="grid grid-cols-12 gap-y-2">

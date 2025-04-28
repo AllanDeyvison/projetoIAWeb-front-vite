@@ -7,8 +7,9 @@ import { useNavigate } from 'react-router-dom'
 import DeleteUser from './DeleteUser'
 import { FiEdit2 } from 'react-icons/fi'
 import { ToastAlerts } from '@/utils/ToastAlerts'
+import { AiOutlineClose } from 'react-icons/ai'
 
-export default function EditUserModal() {
+export default function EditUserModal({ isCollapsed }: { isCollapsed: boolean }) {
   let [isOpen, setIsOpen] = useState(false)
   const { user } = useContext(AuthContext);
   const token = user.token
@@ -43,6 +44,10 @@ export default function EditUserModal() {
 
   async function submitNewUser(event: ChangeEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!newUser.password || !confirmPassword) {
+      ToastAlerts("Preencha a senha e a confirmação de senha!", "info");
+      return;
+    }
     if (confirmPassword === newUser.password) {
       try {
         await update(`/user/update`, newUser, setnewUser, {
@@ -53,7 +58,7 @@ export default function EditUserModal() {
         close();
       } catch (error) {
         ToastAlerts("Erro ao Atualizar usuário!", "erro")
-        console.log(token)
+        // console.log(token)
       }
     } else {
       ToastAlerts("Senhas não conferem!", "erro")
@@ -66,16 +71,16 @@ export default function EditUserModal() {
 
   return (
     <>
-      <Button onClick={open} ><FiEdit2 className='w-6 h-6 mr-2' /></Button>
 
-      {/* <Button onClick={open} className='flex items-center py-2.5 px-4 w-full text-left rounder transition duration-300 hover:bg-gray-100 hover:text-white'>
-      <AiFillEdit className='w-6 h-6 mr-2' />
+
+      <Button onClick={open} className='flex items-center py-2.5 px-4 w-full text-left rounder transition duration-300 hover:bg-gray-900 hover:text-white'>
+        <FiEdit2 className='w-6 h-6 mr-2' />
         <span className={`transition-opacity duration-300 delay-200 ${isCollapsed ? 'opacity-0' : 'opacity-100'}`}>
           {
             !isCollapsed && "Editar Perfil"
           }
         </span>
-      </Button> */}
+      </Button>
 
       <Dialog open={isOpen} as="div" className="relative z-10 focus:outline-none " onClose={close} __demoMode>
         <div className="fixed inset-0 z-10  overflow-y-auto backdrop-blur-2xl bg-white/5">
@@ -98,9 +103,7 @@ export default function EditUserModal() {
                       <Button
                         className="text-gray-400 dark:text-white"
                         onClick={close}
-                      ><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                        </svg>
+                      ><AiOutlineClose className='w-6 h-6' />
                       </Button>
                     </div>
                     <form className="space-y-6 p-10" onSubmit={submitNewUser}>
@@ -178,10 +181,17 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="••••�
                           }
                         />
                       </div>
-
+                      <button
+                        type="submit"
+                        disabled={!newUser.password || !confirmPassword}
+                        className={`text-white mr-3 ${(!newUser.password || !confirmPassword) ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-700 hover:bg-blue-800'} focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}
+                      >
+                        Editar
+                      </button>
+                      {/* 
                       <button type="submit"
                         className="text-white mr-3 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        Editar</button>
+                        Editar</button> */}
                       <DeleteUser />
                     </form>
 

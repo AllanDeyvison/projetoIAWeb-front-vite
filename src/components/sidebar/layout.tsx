@@ -44,7 +44,7 @@ const Layout = () => {
 
                     <div className='mb-10 transition-opacity duration-300 delay-300'>
                         <button className='flex items-center py-2.5 px-4 w-full text-left rounder transition duration-300 hover:bg-gray-900 hover:text-white'>
-                            <EditUserModal />
+                          
                             <span className={`transition-opacity duration-300 delay-200 ${isCollapsed ? 'opacity-0' : 'opacity-100'}`}>
                                 {
                                     !isCollapsed && "Editar Perfil"
