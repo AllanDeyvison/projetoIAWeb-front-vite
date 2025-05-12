@@ -40,12 +40,21 @@ export const UploadPDF = () => {
 
   return (
     <div className="flex flex-col items-center gap-4 p-4 border rounded-md shadow-md max-w-sm mx-auto text-white">
-      <input type="file" accept="application/pdf" onChange={handleFileChange} />
+      <input
+        type="file"
+        accept="application/pdf"
+        onChange={handleFileChange}
+        className="file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        tabIndex={0}
+        aria-label="Selecionar arquivo PDF"
+      />
       <button 
         onClick={handleUpload} 
         disabled={loading}
-        className="bg-blue-700 text-white px-4 py-2 rounded disabled:bg-gray-400"
+        className="bg-blue-700 text-white px-4 py-2 rounded disabled:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
         title="Enviar arquivo PDF"
+        tabIndex={0}
+        aria-label="Enviar PDF"
       >
         {loading ? <RotatingLines strokeColor="white" strokeWidth="5" animationDuration="0.75" width="24" visible={true} /> : "Enviar PDF"}
       </button>

@@ -12,7 +12,14 @@ function Help() {
         <li><strong>Problemas de acesso?</strong> Verifique se digitou corretamente seu e-mail e senha. Se persistir, contate o suporte.</li>
       </ul>
       <div className="mt-6">
-        <Link to="/home" className="text-blue-700 hover:underline">Voltar para o início</Link>
+        <Link
+          to="/home"
+          className="text-blue-700 hover:underline focus:underline focus:outline-none focus:ring-2 focus:ring-blue-500 px-2 py-1 rounded transition"
+          tabIndex={0}
+          aria-label="Voltar para o início"
+        >
+          Voltar para o início
+        </Link>
       </div>
     </div>
   );
