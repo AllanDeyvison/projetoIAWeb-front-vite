@@ -70,7 +70,7 @@ function Chat() {
 
         } catch (error) {
             console.log(error);
-            alert("Erro ao enviar mensagem");
+            ToastAlerts("Erro ao enviar mensagem", "erro");
             setLoading(false);
         }
     }
