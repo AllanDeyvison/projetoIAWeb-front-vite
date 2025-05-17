@@ -6,8 +6,8 @@ import Login from './pages/login/Login'
 import Home from './pages/home/Home'
 import { ToastContainer } from 'react-toastify'
 import MyModal from './components/editUser/EditUserModal'
-import { AdminRoute } from './pages/admin/AdminRoute'
-import { Admin } from './pages/admin/Admin'
+// import { AdminRoute } from './pages/admin/AdminRoute'
+// import { Admin } from './pages/admin/Admin'
 import Help from './pages/help/Help'
 import 'react-toastify/dist/ReactToastify.css';
 import Chat from './components/chat/Chat'
@@ -34,9 +34,9 @@ function App() {
                 <Route path='/chat/:chatId?' element={<Chat />} />
                 <Route path='/edit:id' element={<MyModal isCollapsed={false} />} />
                 <Route path='/help' element={<Help />} />
-                <Route element={<AdminRoute />}>
+                {/* <Route element={<AdminRoute />}>
                   <Route path='/admin' element={<Admin />} />
-                </Route>
+                </Route> */}
               </Routes>
             </div>
           </BrowserRouter>
