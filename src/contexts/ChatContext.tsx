@@ -26,7 +26,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
                 const chatsList = await resumeChat("http://localhost:5000/chats", user.username);
                 setChats(chatsList);
             } catch (error) {
-                ToastAlerts("Erro ao carregar chats", "erro");
+                ToastAlerts("Erro ao carregar chats.", "erro");
                 console.error(error);
             }
         }

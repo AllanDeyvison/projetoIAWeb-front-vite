@@ -24,7 +24,7 @@ export default function EditUserModal({ isCollapsed }: { isCollapsed: boolean })
 
   useEffect(() => {
     if (token === '') {
-      ToastAlerts('Você precisa estar logado para isso', "info")
+      ToastAlerts('Você precisa estar logado para isso.', "info")
       navigate('/login')
     }
   }, [token])
@@ -105,7 +105,7 @@ export default function EditUserModal({ isCollapsed }: { isCollapsed: boolean })
 
       <Button
         onClick={open}
-        className='flex items-center py-2.5 px-4 w-full text-left  transition duration-300 hover:bg-blue-700 hover:text-white focus:bg-blue-700 focus:text-white outline-none'
+        className='flex items-center py-2.5 px-4 w-full text-left  transition duration-300 hover:bg-purple-800 hover:text-white focus:bg-blue-700 focus:text-white outline-none'
         tabIndex={0}
         aria-label="Editar Perfil"
       >
@@ -234,7 +234,7 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500`}
                       <button
                         type="submit"
                         disabled={!newUser.password || !confirmPassword}
-                        className={`text-white mr-3 ${(!newUser.password || !confirmPassword) ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-700 hover:bg-blue-800'} focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}
+                        className={`text-white mr-3 ${(!newUser.password || !confirmPassword) ? 'bg-gray-400 cursor-not-allowed' : 'bg-purple-800 hover:bg-purple-900'} focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}
                       >
                         Editar
                       </button>

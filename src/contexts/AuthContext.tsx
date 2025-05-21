@@ -66,11 +66,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
                     localStorage.removeItem("user");
                 }
             });
-            ToastAlerts("Login efetuado com sucesso", "sucesso")
+            ToastAlerts("Login efetuado com sucesso!", "sucesso")
             setIsLoading(false)
         } catch (error) {
             console.log(error)
-            ToastAlerts("Usuário ou senha inválidos", "erro")
+            ToastAlerts("Usuário ou senha inválidos.", "erro")
             setIsLoading(false)
         }
     }

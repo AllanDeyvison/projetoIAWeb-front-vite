@@ -74,7 +74,7 @@ function Help() {
         <div className="mt-10 flex justify-center">
           <Link
             to="/home"
-            className="inline-block bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg shadow hover:bg-blue-800 focus:underline focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            className="inline-block bg-purple-800 text-white font-semibold px-6 py-2 rounded-lg shadow hover:bg-purple-900 focus:underline focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
             tabIndex={0}
             aria-label="Voltar para o início"
           >

@@ -45,7 +45,7 @@ function Chat() {
             setMessages(formattedMessages);
         } catch (error) {
             console.error(error);
-            ToastAlerts("Erro ao carregar mensagens", "erro");
+            ToastAlerts("Erro ao carregar mensagens.", "erro");
         } finally {
             setLoading(false);
         }
@@ -60,7 +60,7 @@ function Chat() {
             loadMessages(chatId);
         } catch (error) {
             console.error(error);
-            ToastAlerts("Erro ao carregar mensagens", "erro");
+            ToastAlerts("Erro ao carregar mensagens.", "erro");
         } finally {
             setLoading(false);
         }
@@ -80,7 +80,7 @@ function Chat() {
 
         } catch (error) {
             console.log(error);
-            ToastAlerts("Erro ao enviar mensagem", "erro");
+            ToastAlerts("Erro ao enviar mensagem.", "erro");
 
         } finally {
             setLoading(false);

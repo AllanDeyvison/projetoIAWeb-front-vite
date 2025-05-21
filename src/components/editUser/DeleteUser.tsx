@@ -22,7 +22,7 @@ function DeleteUser() {
 
     function logout() {
         handleLogout();
-        ToastAlerts('Usuário deslogado com sucesso', "info");
+        ToastAlerts('Usuário deslogado com sucesso!', "info");
         navigate('/login');
     }
 

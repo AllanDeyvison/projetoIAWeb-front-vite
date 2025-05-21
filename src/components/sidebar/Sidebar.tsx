@@ -19,7 +19,7 @@ function Sidebar() {
 
     function logout() {
         handleLogout();
-        ToastAlerts('Usuário deslogado com sucesso', "info");
+        ToastAlerts('Usuário deslogado com sucesso.', "info");
         navigate('/login');
     }
 
@@ -40,7 +40,7 @@ function Sidebar() {
                     {
                         !isCollapsed && (
                             <button
-                                className='flex items-center group cursor-pointer transition-colors duration-200 hover:bg-blue-700  p-1 rounded'
+                                className='flex items-center group cursor-pointer transition-colors duration-200 hover:bg-purple-800  p-1 rounded'
                                 title="Novo Chat"
                                 tabIndex={0}
                                 onClick={() => navigate('/chat')}
@@ -64,7 +64,7 @@ function Sidebar() {
                         {chats.map(chat => (
                             <div
                                 key={chat.chat_id}
-                                className={`flex items-center gap-2 ${!isCollapsed ? 'px-3 py-2 mb-1  bg-neutral-800 hover:bg-blue-700 focus:bg-blue-800 cursor-pointer transition-colors outline-none ring-0 focus:ring-2 focus:ring-blue-400' : ''}`}
+                                className={`flex items-center gap-2 ${!isCollapsed ? 'px-3 py-2 mb-1  bg-neutral-800 hover:bg-purple-800 focus:bg-teal-800 cursor-pointer transition-colors outline-none ring-0 focus:ring-2 focus:ring-blue-400' : ''}`}
                                 onClick={() => navigate(`/chat/${chat.chat_id}`)}
                                 tabIndex={0}
                                 role="button"
@@ -83,7 +83,7 @@ function Sidebar() {
                         <EditUserModal isCollapsed={isCollapsed} />
                         <Link to="/help" tabIndex={-1}>
                           <button
-                            className='flex items-center py-2.5 px-4 w-full text-left  transition duration-300 hover:bg-blue-700 hover:text-white focus:bg-blue-800 focus:text-white outline-none'
+                            className='flex items-center py-2.5 px-4 w-full text-left  transition duration-300 hover:bg-purple-800 hover:text-white focus:bg-blue-800 focus:text-white outline-none'
                             tabIndex={0}
                             aria-label="Ajuda"
                           >
