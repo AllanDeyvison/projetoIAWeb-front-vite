@@ -71,8 +71,8 @@ function Login() {
                   Me manter conectado?
                 </label>
               </div>
-              <button type="submit" className="w-full text-white bg-purple-800 hover:bg-purple-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg
-               text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-2 transition"
+              <button type="submit" className="w-full text-white bg-purple-800 hover:bg-purple-900 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg
+               text-sm px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800 mt-2 transition"
                 tabIndex={0}
                 aria-label="Entrar"
               >
