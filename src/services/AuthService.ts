@@ -2,7 +2,7 @@ import Message from "@/models/Message";
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: `http://localhost:8090`
+  baseURL: `https://aprovia-auth-back.onrender.com`
 });
 
 export const createUser = async(url: string, dados: Object, setDados: Function) => {
