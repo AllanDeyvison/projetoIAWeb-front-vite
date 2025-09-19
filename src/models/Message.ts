@@ -5,6 +5,6 @@ export default interface Message {
     content: string;
     timestamp: string;
     user: User;
-    message: string,
+    message?: string,
     answer?: string,
 }

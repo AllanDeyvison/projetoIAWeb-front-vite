@@ -3,10 +3,9 @@ import { useContext, useEffect, useState } from "react";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 import ChatAnswer from "./ChatAnswer";
-import { RotatingLines } from "react-loader-spinner";
 import AuthContext from "@/contexts/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
-import { chatAdd, resumeChat} from "@/services/ChatService";
+import {chatStream, resumeChat} from "@/services/ChatService";
 import Sidebar from "../sidebar/Sidebar";
 import { ToastAlerts } from "@/utils/ToastAlerts";
 import Navbar from "../navbar/Navbar";
@@ -15,7 +14,7 @@ import { useChatContext } from "@/contexts/ChatContext";
 function Chat() {
 
     const [messages, setMessages] = useState<Message[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
+    // const [loading, setLoading] = useState<boolean>(false);
     const { user } = useContext(AuthContext);
     const { refreshChats } = useChatContext();
     const { chatId } = useParams();
@@ -32,9 +31,9 @@ function Chat() {
     }, [chatId]);
 
     async function loadMessages(chatId: string) {
-        setLoading(true);
+        // setLoading(true);
         try {
-            const response = await resumeChat(`http://localhost:5000/chats/${chatId}`, user.username);
+            const response = await resumeChat(`/chats/${chatId}`, user.username);
 
             const formattedMessages = response.messages.map((msg: any) => ({
                 role: msg.role,
@@ -47,45 +46,83 @@ function Chat() {
             console.error(error);
             ToastAlerts("Erro ao carregar mensagens.", "erro");
         } finally {
-            setLoading(false);
+            // setLoading(false);
         }
     }
+  
+ async function handleSendMessage(text: string) {
+    // setLoading(true);
 
-    async function addMessages(text: string, chatId: string) {
-        setLoading(true);
-        const newMessage: Message = { message: text, answer: '', user: user, role: "user", content: text, timestamp: new Date().toISOString() };
-        setMessages([...messages, newMessage]);
-        try {
-            await chatAdd(`http://localhost:5000/chats/${chatId}/add`, text, user.username);
-            loadMessages(chatId);
-        } catch (error) {
-            console.error(error);
-            ToastAlerts("Erro ao carregar mensagens.", "erro");
-        } finally {
-            setLoading(false);
+    const userMessage: Message = {
+      role: "user",
+      content: text,
+      user: user,
+      timestamp: new Date().toISOString(),
+      // message: text,
+    };
+    const assistantPlaceholder: Message = {
+      role: "assistant",
+      content: "",
+      user: user, 
+      timestamp: new Date().toISOString(),
+      // message: "",
+    };
+
+    // Adiciona a mensagem do usuário e o placeholder do assistente ao estado
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      userMessage,
+      assistantPlaceholder,
+    ]);
+
+    let fullResponseContent = "";
+
+    try {
+      // Determina o endpoint com base na existência de um chatId
+      const endpoint = chatId ? `/chats/${chatId}/add` : '/chats/new';
+      
+      const { reader, decoder, chatId: newChatId } = await chatStream(
+        endpoint,
+        text,
+        user.username
+      );
+
+      let done = false;
+      while (!done) {
+        const { value, done: readerDone } = await reader.read();
+        done = readerDone;
+        const chunk = decoder.decode(value, { stream: true });
+        fullResponseContent += chunk;
+        // Atualiza a última mensagem do assistente com o novo pedaço de texto
+        setMessages((prevMessages) => {
+          const lastMessage = prevMessages[prevMessages.length - 1];
+          if (lastMessage.role === "assistant") {
+            lastMessage.content = fullResponseContent;
+          }
+          return [...prevMessages];
+        });
+      }
+
+      // Se for um novo chat, navega para a URL correta e atualiza a barra lateral
+      if (!chatId && newChatId) {
+        navigate(`/chat/${newChatId}`);
+        refreshChats();
+      }
+    } catch (error) {
+      console.error(error);
+      ToastAlerts("Erro ao enviar mensagem.", "erro");
+      // Se houver um erro, atualiza a última mensagem para exibir a falha
+      setMessages((prevMessages) => {
+        const lastMessage = prevMessages[prevMessages.length - 1];
+        if (lastMessage.role === "assistant") {
+          lastMessage.content = "Ocorreu um erro ao gerar a resposta. Tente novamente.";
         }
+        return [...prevMessages];
+      });
+    } finally {
+      // setLoading(false);
     }
-
-
-    async function addMessageChatNew(text: string) {
-        const newMessage: Message = { message: text, answer: '', user: user, role: "user", content: text, timestamp: new Date().toISOString() };
-        setMessages([...messages, newMessage]);
-        setLoading(true);
-        try {
-            const resp = await chatAdd('http://localhost:5000/chats/new', text, user.username);
-            console.log("Resposta da API:", resp);
-            const newChatId = resp.answer.chat_id;  
-            navigate(`/chat/${newChatId}`);
-            refreshChats();
-
-        } catch (error) {
-            console.log(error);
-            ToastAlerts("Erro ao enviar mensagem.", "erro");
-
-        } finally {
-            setLoading(false);
-        }
-    }
+  }
 
 
     return (
@@ -102,24 +139,14 @@ function Chat() {
                                     {messages.map((message, index) => (
                                         <div key={index} className="col-start-1 col-end-13 p-3 rounded-lg">
                                             {message.role === 'user' && <ChatMessage message={message} user={user} />}
-                                            {message.role === 'assistant' && <ChatAnswer answer={message.content} />}
-                                            <div className="p-3">
-                                                {loading && index === messages.length - 1 && (
-                                                    <RotatingLines strokeColor="black" strokeWidth="5" animationDuration="0.75" width="50" visible={true} />
-                                                )}
-                                            </div>
+                                            {message.role === 'assistant' && <ChatAnswer answer={message.content}/> }
+                                           
                                         </div>
                                     ))}
                                 </div>
                             </div>
                         </div>
-                        <ChatInput addMessage={(text: string) => {
-                            if (chatId) {
-                                addMessages(text, chatId);
-                            } else {
-                                addMessageChatNew(text);
-                            }
-                        }} />
+                        <ChatInput addMessage={handleSendMessage} />
                     </div>
                 </div>
             </div>
