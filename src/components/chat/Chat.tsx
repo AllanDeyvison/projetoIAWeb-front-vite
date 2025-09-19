@@ -10,6 +10,7 @@ import Sidebar from "../sidebar/Sidebar";
 import { ToastAlerts } from "@/utils/ToastAlerts";
 import Navbar from "../navbar/Navbar";
 import { useChatContext } from "@/contexts/ChatContext";
+import { useModelContext } from "@/contexts/ModelContext";
 
 function Chat() {
 
@@ -17,6 +18,7 @@ function Chat() {
     // const [loading, setLoading] = useState<boolean>(false);
     const { user } = useContext(AuthContext);
     const { refreshChats } = useChatContext();
+    const { model } = useModelContext();
     const { chatId } = useParams();
     const navigate = useNavigate();
 
@@ -50,7 +52,7 @@ function Chat() {
         }
     }
   
- async function handleSendMessage(text: string) {
+ async function handleSendMessage(text: string, model: string) {
     // setLoading(true);
 
     const userMessage: Message = {
@@ -83,6 +85,7 @@ function Chat() {
       
       const { reader, decoder, chatId: newChatId } = await chatStream(
         endpoint,
+        model,
         text,
         user.username
       );

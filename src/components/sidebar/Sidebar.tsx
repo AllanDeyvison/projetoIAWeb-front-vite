@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai'
-import { FiEdit, FiLogOut, FiSidebar, FiHelpCircle } from "react-icons/fi";
+import { FiEdit, FiLogOut, FiSidebar, FiHelpCircle, FiDivideCircle, FiBookOpen } from "react-icons/fi";
 import { Link, useNavigate } from 'react-router-dom';
 import EditUserModal from '../editUser/EditUserModal';
 import AuthContext from '@/contexts/AuthContext';
 import { ToastAlerts } from '@/utils/ToastAlerts';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useChatContext } from '@/contexts/ChatContext';
+import { useModelContext } from '@/contexts/ModelContext';
 
 
 
@@ -16,6 +17,7 @@ function Sidebar() {
     const [isCollapsed, setIsCollapsed] = useState(true)
     const { user, handleLogout } = useContext(AuthContext);
     const { chats, refreshChats } = useChatContext();
+    const { model, setModel } = useModelContext();
 
     function logout() {
         handleLogout();
@@ -80,6 +82,32 @@ function Sidebar() {
                         ))}
                     </nav>
                     <div className='mb-10 transition-opacity duration-300 delay-300'>
+                        {/* Botão para alternar modelo */}
+                        <button
+                            className={`flex items-center py-2.5 px-4 w-full text-left transition duration-300 rounded
+                                ${model === 'qwen2-math'
+                                    ? 'hover:bg-red-600 hover:text-white'
+                                    : 'hover:bg-blue-600 hover:text-white'}
+                            focus:text-white outline-none mb-2`}
+                            tabIndex={0}
+                            aria-label="Ir para matemática"
+                            onClick={() => setModel(model === 'llama3' ? 'qwen2-math' : 'llama3')}
+                        >
+                            {model === 'qwen2-math' ? (
+                                <FiBookOpen className="w-6 h-6 mr-2" />
+                            ) : (
+                                <FiDivideCircle className="w-6 h-6 mr-2" />
+                            )}
+                            <span className={`transition-opacity duration-300 delay-200 ${isCollapsed ? 'opacity-0' : 'opacity-100'}`}>
+                                {!isCollapsed && (model === 'qwen2-math' ? "Ir para Inglês" : "Ir para matemática")}
+                            </span>
+                        </button>
+                        {/* Debug: mostrar valor do model quando for qwen2-math */}
+                        {/* {model === 'qwen2-math' && (
+                            <div className="text-xs text-yellow-300 px-4 pb-2">
+                                Debug: model = {model}
+                            </div>
+                        )} */}
                         <EditUserModal isCollapsed={isCollapsed} />
                         <Link to="/help" tabIndex={-1}>
                           <button

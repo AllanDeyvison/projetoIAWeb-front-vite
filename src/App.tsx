@@ -12,6 +12,7 @@ import Help from './pages/help/Help'
 import 'react-toastify/dist/ReactToastify.css';
 import Chat from './components/chat/Chat'
 import { ChatProvider } from './contexts/ChatContext'
+import { ModelProvider } from './contexts/ModelContext'
 
 function App() {
 
@@ -19,30 +20,30 @@ function App() {
 
   return (
     <>
-
-      <AuthProvider>
-        <ChatProvider>
-          <BrowserRouter>
-            <ToastContainer />
-            {/* <Navbar /> */}
-            <div className="min-h-[80vh]">
-              <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/login" element={<Login />} />
-                <Route path='/home' element={<Home />} />
-                <Route path='/chat/:chatId?' element={<Chat />} />
-                <Route path='/edit:id' element={<MyModal isCollapsed={false} />} />
-                <Route path='/help' element={<Help />} />
-                {/* <Route element={<AdminRoute />}>
-                  <Route path='/admin' element={<Admin />} />
-                </Route> */}
-              </Routes>
-            </div>
-          </BrowserRouter>
-        </ChatProvider>
-      </AuthProvider>
-
+      <ModelProvider>
+        <AuthProvider>
+          <ChatProvider>
+            <BrowserRouter>
+              <ToastContainer />
+              {/* <Navbar /> */}
+              <div className="min-h-[80vh]">
+                <Routes>
+                  <Route path="/" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path='/home' element={<Home />} />
+                  <Route path='/chat/:chatId?' element={<Chat />} />
+                  <Route path='/edit:id' element={<MyModal isCollapsed={false} />} />
+                  <Route path='/help' element={<Help />} />
+                  {/* <Route element={<AdminRoute />}>
+                    <Route path='/admin' element={<Admin />} />
+                  </Route> */}
+                </Routes>
+              </div>
+            </BrowserRouter>
+          </ChatProvider>
+        </AuthProvider>
+      </ModelProvider>
     </>
   )
 }
