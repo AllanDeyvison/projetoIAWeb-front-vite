@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai'
-import { FiEdit, FiLogOut, FiSidebar, FiHelpCircle, FiDivideCircle, FiBookOpen } from "react-icons/fi";
+import { FiEdit, FiLogOut, FiSidebar, FiHelpCircle, FiDivideCircle, FiBookOpen, FiTrash } from "react-icons/fi";
 import { Link, useNavigate } from 'react-router-dom';
 import EditUserModal from '../editUser/EditUserModal';
 import AuthContext from '@/contexts/AuthContext';
@@ -8,6 +8,7 @@ import { ToastAlerts } from '@/utils/ToastAlerts';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useChatContext } from '@/contexts/ChatContext';
 import { useModelContext } from '@/contexts/ModelContext';
+import DeleteChat from '../chat/ChatDelete';
 
 
 
@@ -32,7 +33,6 @@ function Sidebar() {
  
 
     useHotkeys('ctrl+shift+l', () => logout(), [user]);
-
 
 
     return (
@@ -78,6 +78,10 @@ function Sidebar() {
                                         <p className="truncate font-normal text-gray-200">{chat.title}</p>
                                     )}
                                 </span>
+                                {/* Botão de deletar */}
+                                {!isCollapsed && (
+                                <DeleteChat chatId={chat.chat_id} chatTitle={chat.title} />
+                                )}
                             </div>
                         ))}
                     </nav>

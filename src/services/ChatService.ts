@@ -57,3 +57,17 @@ export async function chatStream(endpoint: string, model: string, text: string, 
   throw new Error(error.message || 'Erro na conexão');
 }
 }
+
+export async function deleteChat(endpoint: string, userId: string, chatId: string) {
+  try {
+    const url = `${endpoint}/${chatId}/delete?user_id=${userId}`;
+    const response = await chatAPI.delete(url);
+    return response.data;
+  } catch (error: any) {
+    if (error.response) {
+      throw new Error(error.response.data.error || 'Erro ao deletar o chat');
+    } else {
+      throw new Error('Erro na conexão');
+    }
+  }
+}

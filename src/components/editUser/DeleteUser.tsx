@@ -65,18 +65,21 @@ function DeleteUser() {
                                 <div className="max-w-2xl p-5 mx-auto ">
                                     <div className="bg-white shadow-md border border-gray-200 rounded-lg  p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700">
                                         <p className='text-center font-semibold mb-4'>Você tem certeza de que deseja apagar seu usuário?</p>
+                                        <p className="text-center mb-4 text-gray-700 dark:text-gray-300">
+                                            Esta ação não pode ser desfeita.
+                                        </p>
                                         <div className='flex justify-around'>
                                             <button onClick={close}
                                                 className="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800 transition"
                                                 tabIndex={0}
                                                 aria-label="Cancelar exclusão"
-                                            >Não</button>
+                                            >Cancelar</button>
                                             <button onClick={deleteU}
                                                 className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 transition"
                                                 tabIndex={0}
                                                 aria-label="Confirmar exclusão"
                                             >
-                                                Sim
+                                                Deletar
                                             </button>
                                         </div>
 

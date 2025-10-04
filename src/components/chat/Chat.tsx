@@ -52,7 +52,7 @@ function Chat() {
         }
     }
   
- async function handleSendMessage(text: string) {
+async function handleSendMessage(text: string) {
     // setLoading(true);
 
     const userMessage: Message = {
@@ -143,7 +143,7 @@ function Chat() {
                                         <div key={index} className="col-start-1 col-end-13 p-3 rounded-lg">
                                             {message.role === 'user' && <ChatMessage message={message} user={user} />}
                                             {message.role === 'assistant' && <ChatAnswer answer={message.content}/> }
-                                           
+                                          
                                         </div>
                                     ))}
                                 </div>
