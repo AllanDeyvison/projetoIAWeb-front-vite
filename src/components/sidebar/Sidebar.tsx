@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai'
-import { FiEdit, FiLogOut, FiSidebar, FiHelpCircle, FiDivideCircle, FiBookOpen, FiTrash } from "react-icons/fi";
+import { FiEdit, FiLogOut, FiSidebar, FiHelpCircle, FiDivideCircle, FiBookOpen} from "react-icons/fi";
 import { Link, useNavigate } from 'react-router-dom';
 import EditUserModal from '../editUser/EditUserModal';
 import AuthContext from '@/contexts/AuthContext';
