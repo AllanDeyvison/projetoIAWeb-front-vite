@@ -33,6 +33,7 @@ jobs:
       - name: Build app
         run: npm run build
 
+
       - name: Deploy to Vercel
         if: github.ref == 'refs/heads/main'
         uses: amondnet/vercel-action@v25
