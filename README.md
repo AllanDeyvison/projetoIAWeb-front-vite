@@ -1,82 +1,120 @@
 # AprovIA Frontend
 
-Este documento descreve de forma clara o funcionamento do frontend AprovIA, sua estrutura, tecnologias utilizadas, dependências necessárias e passos para rodar / buildar o projeto.
+Este documento descreve o funcionamento do frontend AprovIA, sua estrutura, tecnologias utilizadas, dependências, e passos para rodar e buildar o projeto.
 
 ---
 
 ## 🔎 Visão Geral — como funciona
 
-AprovIA é uma SPA (React + TypeScript + Vite) que se comunica com um backend via REST/streaming para:
+AprovIA é uma SPA (React + TypeScript + Vite) que se comunica com um backend via REST e streaming para:
 
 - autenticação e cadastro de usuários;
-- gerenciamento de chats (criar, listar, excluir);
-- envio de mensagens e recepção de respostas da IA via streaming;
-- edição e exclusão de perfil.
+- criação, listagem e exclusão de chats;
+- envio de mensagens e recepção de respostas da IA via streaming (exibição incremental);
+- edição e exclusão de perfil;
 
-O fluxo de chat por streaming está implementado em [src/services/ChatService.ts](src/services/ChatService.ts) e consumido por [src/components/chat/Chat.tsx](src/components/chat/Chat.tsx). O componente de exibição usa [src/components/chat/ChatAnswer.tsx](src/components/chat/ChatAnswer.tsx) (inclui TTS) e o input por voz em [src/components/chat/ChatInput.tsx](src/components/chat/ChatInput.tsx).
+Fluxos principais:
+- Streaming de chat: [src/services/ChatService.ts](src/services/ChatService.ts)
+- Consumidor do stream: [src/components/chat/Chat.tsx](src/components/chat/Chat.tsx)
+- Render de resposta (TTS): [src/components/chat/ChatAnswer.tsx](src/components/chat/ChatAnswer.tsx)
+- Input por voz: [src/components/chat/ChatInput.tsx](src/components/chat/ChatInput.tsx)
+
+Entrada / roteamento: [src/App.tsx](src/App.tsx)
 
 ---
 
-## 🏛️ Arquitetura e organização de pastas
+## 🏛️ Estrutura do projeto (resumida)
 
-Raiz do projeto (resumido):
-
-```
 projetoIAWeb-front-vite/
-├── public/
-├── src/
-│   ├── components/        # UI e blocos reutilizáveis (chat, sidebar, navbar, edit user, etc)
-│   ├── contexts/          # Contextos React (AuthContext, ChatContext, ModelContext)
-│   ├── models/            # Interfaces/Tipos (User, Message, UserLogin, UserType)
-│   ├── pages/             # Páginas (login, register, home, help, admin)
-│   ├── services/          # Chamadas à API (AuthService, ChatService)
-│   ├── utils/             # Utilitários (ToastAlerts)
-│   ├── index.css
-│   └── main.tsx
-├── package.json
-├── tsconfig*.json
-├── vite.config.ts
-└── tailwind.config.js
-```
+- public/
+- src/
+  - components/        — blocos reutilizáveis (chat, sidebar, navbar, edit user)
+  - contexts/          — AuthContext, ChatContext, ModelContext
+  - models/            — tipos/interfaces (User, Message, UserLogin, UserType)
+  - pages/             — páginas (login, register, home, help)
+  - services/          — integrações com APIs (AuthService, ChatService)
+  - utils/             — utilitários (ToastAlerts)
+  - index.css
+  - main.tsx
+- package.json
+- vite.config.ts
+- tailwind.config.js
+- README.md
 
 Links úteis:
 - Roteamento / entrada: [src/App.tsx](src/App.tsx)
-- Autenticação: [src/contexts/AuthContext.tsx](src/contexts/AuthContext.tsx) e [src/services/AuthService.ts](src/services/AuthService.ts)
-- Chat streaming: [src/services/ChatService.ts](src/services/ChatService.ts) e [src/components/chat/Chat.tsx](src/components/chat/Chat.tsx)
+- Autenticação: [src/contexts/AuthContext.tsx](src/contexts/AuthContext.tsx), [src/services/AuthService.ts](src/services/AuthService.ts)
 - Contexto de chats: [src/contexts/ChatContext.tsx](src/contexts/ChatContext.tsx)
 
 ---
 
 ## 🧩 Como foi desenvolvido (padrões e decisões)
 
-- Componentização: UI dividida em componentes pequenos e reutilizáveis (Sidebar, Navbar, ChatMessage, ChatAnswer, ChatInput).
-- Context API: estado global para autenticação e lista de chats (AuthProvider, ChatProvider, ModelProvider).
-- Tipagem forte: todas as entidades usam interfaces TypeScript em [src/models](src/models).
-- Serviços responsáveis por chamadas HTTP/streaming em [src/services](src/services).
-- TailwindCSS para estilos utilitários e responsividade.
-- Acessibilidade: labels, roles e atributos ARIA em botões e formulários.
-- Streaming: ChatService retorna reader/decoder para leitura incremental e atualização de UI enquanto o servidor streama texto (ver Chat.tsx loop de leitura).
+- Componentização: UI dividida em componentes pequenos e reutilizáveis.
+- Estado global: React Context API para autenticação e gerenciamento de chats.
+- Serviços: chamadas HTTP / streaming isoladas em [src/services](src/services).
+- Tipagem forte: TypeScript nas entidades em [src/models](src/models).
+- Estilos: TailwindCSS com variáveis CSS para tema claro/escuro.
+- Acessibilidade: labels, roles, atributos ARIA e navegação por teclado.
+- Streaming: leitura incremental via reader/decoder (ver ChatService e loop em Chat.tsx).
 
 ---
 
 ## ✨ Funcionalidades principais
 
-- Login / Logout / Persistência (localStorage quando “manter conectado”).
-- Historico de chats (sidebar).
-- Mensagens com streaming (exibição incremental).
-- Text-to-Speech para respostas (Web Speech API em ChatAnswer).
-- Reconhecimento de voz para digitação por voz (Web SpeechRecognition em ChatInput).
-- Edição e exclusão de usuário (modals).
+- Registro, login, logout e persistência (localStorage quando “manter conectado”).
+- Histórico de chats na sidebar (através de ChatContext).
+- Mensagens com streaming (render incremental e placeholder).
+- Text-to-Speech (Web Speech API) em [src/components/chat/ChatAnswer.tsx](src/components/chat/ChatAnswer.tsx).
+- Reconhecimento de voz (SpeechRecognition) em [src/components/chat/ChatInput.tsx](src/components/chat/ChatInput.tsx).
+- Edição e exclusão de usuário via modais.
+- Small UX improvements: toasts (react-toastify), loading spinners, teclado quente.
+
+---
+
+## 🧰 Tecnologias e dependências principais
+
+Runtime / build:
+- Node 18+ (recomendado Node 20)
+- Vite (config: [vite.config.ts](vite.config.ts))
+
+Linguagens / frameworks:
+- React 18
+- TypeScript 5
+- JSX/TSX
+
+Estilo e UI:
+- TailwindCSS 3
+- tailwindcss-animate, tailwind-scrollbar
+- @headlessui/react (modals/dialogs)
+- class-variance-authority, tailwind-merge (componentes UI)
+
+Rede / utilitários:
+- axios (integração com auth/API)
+- fetch (streaming de ChatService)
+- react-router-dom (roteamento)
+- react-toastify (toasts)
+- react-markdown (render markdown nas mensagens)
+- react-icons (ícones)
+- react-loader-spinner (spinners)
+
+Dev / lint / build:
+- eslint
+- @vitejs/plugin-react
+- typescript
+- postcss / autoprefixer
+
+Você pode ver a lista completa e versões em [package.json](package.json).
 
 ---
 
 ## 🛠️ Requisitos e instalação
 
-1. Node 18+ (recomendado Node 20)
-2. Git
+Requisitos:
+- Node 18+ (recomendado 20)
+- Git
 
-Passos:
-
+Instalação:
 ```bash
 git clone <repo-url>
 cd projetoIAWeb-front-vite
@@ -85,20 +123,16 @@ npm install
 # yarn
 ```
 
-Variáveis de ambiente necessárias (arquivo .env):
-- VITE_AUTH_API=http://localhost:8090   # endpoint de auth
-- VITE_CHAT_API=http://127.0.0.1:5000   # endpoint de chat (streaming)
-
-Criar .env na raiz com:
+Variáveis de ambiente (arquivo .env na raiz):
 ```
 VITE_AUTH_API=http://localhost:8090
 VITE_CHAT_API=http://127.0.0.1:5000
 ```
 
-Rodar em dev:
+Rodar em desenvolvimento:
 ```bash
 npm run dev
-# acessa em http://localhost:5173
+# acesse http://localhost:5173
 ```
 
 Build para produção:
@@ -109,22 +143,17 @@ npm run preview
 
 ---
 
-## ⚠️ Observações importantes
+## ⚠️ Notas importantes / integração
 
-- O streaming depende do backend suportar responses com body em streaming; ver implementação em [src/services/ChatService.ts](src/services/ChatService.ts).
-- Para TTS e reconhecimento de voz, o navegador deve suportar Web Speech APIs.
-- Definir corretamente as variáveis VITE_* antes de iniciar, pois Vite injeta essas variáveis em tempo de build.
-- Para deploy (Vercel) veja [vercel.json](vercel.json) e workflow em [.github/workflows/pipeline.yml](.github/workflows/pipeline.yml).
+- Para TTS e reconhecimento de voz, o navegador deve suportar as Web Speech APIs.
+- Garanta que VITE_* esteja correto antes do build (são injetadas no tempo de build).
+- Para deploy em Vercel, veja [vercel.json](vercel.json) e o workflow de CI em [.github/workflows/pipeline.yml](.github/workflows/pipeline.yml).
 
 ---
+## Contato
 
-## 📚 Referências e docs
+Desenvolvido por [Allan Deyvison, Biatriz, Nickolas] 
+A API estará disponível em: [https://aprovia.vercel.app/)
 
-- Vite: https://vitejs.dev/
-- React + TypeScript: https://react.dev/
-- TailwindCSS: https://tailwindcss.com/
-- Código fonte: [package.json](package.json), [vite.config.ts](vite.config.ts)
 
---- 
-
-Contribuições e issues: abrir PRs/Issues no repositório. Obrigatório rodar lint/tests antes do merge (scripts em package.json).
+---
