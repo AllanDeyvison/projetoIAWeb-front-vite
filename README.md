@@ -152,7 +152,7 @@ npm run preview
 ---
 ## Contato
 
-Desenvolvido por [Allan Deyvison, Biatriz, Nickolas] 
+Desenvolvido por [Allan Deyvison, Beatriz, Nickolas] 
 A API estará disponível em: [https://aprovia.vercel.app/)
 
 
